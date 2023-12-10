@@ -1,5 +1,6 @@
 import InputView from './InputView.js';
 import OutputView from './OutputView.js';
+import Validation from './Validation.js';
 
 class App {
   async play() {
@@ -11,7 +12,7 @@ class App {
     while (true) {
       try {
         const size = await InputView.readBridgeSize();
-
+        Validation.bridgeSize(size);
         break;
       } catch (error) {
         OutputView.print(error.message);

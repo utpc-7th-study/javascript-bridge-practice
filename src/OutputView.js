@@ -11,6 +11,10 @@ const OutputView = {
   printMap() {},
 
   printResult() {},
+
+  print(message) {
+    Console.print(message);
+  },
 };
 
 export default OutputView;
