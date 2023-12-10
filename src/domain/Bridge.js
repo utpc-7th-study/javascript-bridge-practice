@@ -29,7 +29,6 @@ class Bridge {
   }
 
   status() {
-    console.log(this.#status, this.#commands);
     return this.#status;
   }
 
