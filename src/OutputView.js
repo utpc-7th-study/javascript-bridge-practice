@@ -8,8 +8,6 @@ const OutputView = {
     Console.print('다리 건너기 게임을 시작합니다.\n');
   },
 
-  printMap() {},
-
   printResult(isMove, totalCount) {
     Console.print(`\n게임 성공 여부: ${isMove ? '성공' : '실패'}`);
     Console.print(`총 시도한 횟수: ${totalCount}`);
@@ -19,7 +17,7 @@ const OutputView = {
     Console.print(message);
   },
 
-  printRoundResult(isSuccess, moved) {
+  printMap(isSuccess, moved) {
     if (isSuccess) {
       Console.print('\n최종 게임 결과');
     }
