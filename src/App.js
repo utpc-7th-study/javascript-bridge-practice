@@ -1,4 +1,3 @@
-/* eslint-disable max-lines-per-function */
 import BridgeGame from './controller/BridgeGame.js';
 import { BRIDGE_LENGTH, COMMAND } from './constant/BridgeGame.js';
 import ERROR_MESSAGE from './constant/BridgeGameMessage.js';
@@ -10,40 +9,14 @@ class App {
 
   async play() {
     const bridgeSize = await this.readBridgeSize();
-    const bridgeGame = new BridgeGame(bridgeSize);
+    this.#bridgeGame = new BridgeGame(bridgeSize);
+    await this.#mainBridgeGameLoop();
 
-    while (!bridgeGame.done()) {
-      const moving = await this.readMoving();
-      const safe = bridgeGame.move(moving);
-      OutputView.printMap(bridgeGame.status());
-      if (!safe) {
-        const restart = await this.readRestart();
-        if (!restart) break;
-        bridgeGame.retry();
-      }
-    }
-
-    OutputView.printResult(bridgeGame.status(), bridgeGame.done(), bridgeGame.tryCount());
-  }
-
-  async mainLoop() {
-    let continueGame = true;
-    while (!this.#bridgeGame.done() && continueGame) {
-      continueGame = await this.#processMove();
-      if (continueGame) {
-        this.#bridgeGame.retry();
-      }
-    }
-  }
-
-  async #processMove() {
-    const moving = await this.readMoving();
-    if (!this.#bridgeGame.move(moving)) {
-      OutputView.printMap(this.#bridgeGame.status());
-      return await this.readRestart();
-    }
-    OutputView.printMap(this.#bridgeGame.status());
-    return true;
+    OutputView.printResult(
+      this.#bridgeGame.status(),
+      this.#bridgeGame.done(),
+      this.#bridgeGame.tryCount(),
+    );
   }
 
   async readBridgeSize() {
@@ -77,6 +50,24 @@ class App {
       OutputView.print(error.message);
       return this.readRestart();
     }
+  }
+
+  async #mainBridgeGameLoop() {
+    while (!this.#bridgeGame.done()) {
+      const moving = await this.readMoving();
+      const safe = this.#bridgeGame.move(moving);
+      OutputView.printMap(this.#bridgeGame.status());
+      if (!safe && !(await this.#handleUnsafeMove())) break;
+    }
+  }
+
+  async #handleUnsafeMove() {
+    OutputView.printMap(this.#bridgeGame.status());
+    if (await this.readRestart()) {
+      this.#bridgeGame.retry();
+      return true;
+    }
+    return false;
   }
 
   #validateBridgeSize(bridgeSizeInput) {
