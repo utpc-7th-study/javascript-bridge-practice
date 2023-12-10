@@ -18,7 +18,7 @@ const InputView = {
    */
   async readMoving() {
     const userInput = await this.onRead(
-      '이동할 칸을 선택해주세요. (위: U, 아래: D)\n',
+      '\n이동할 칸을 선택해주세요. (위: U, 아래: D)\n',
     );
 
     return userInput;
