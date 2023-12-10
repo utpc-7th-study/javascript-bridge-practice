@@ -1,5 +1,9 @@
+import OutputView from './OutputView.js';
+
 class App {
-  async play() {}
+  async play() {
+    OutputView.printStartMessage();
+  }
 }
 
 const app = new App();
