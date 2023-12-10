@@ -39,15 +39,20 @@ class App {
       try {
         const input = await InputView.readMoving();
         Validation.moving(input);
-        const isMoved = this.#bridgeGame.move(input, idx);
-        if (isMoved) {
-          return true;
-        }
-        return false;
+        return this.#checkMove(input, idx);
       } catch (error) {
         OutputView.print(error.message);
       }
     }
+  }
+
+  #checkMove(input, idx) {
+    const isMoved = this.#bridgeGame.move(input, idx);
+    if (isMoved) {
+      this.#bridgeGame.addMoveCount();
+      return true;
+    }
+    return false;
   }
 }
 

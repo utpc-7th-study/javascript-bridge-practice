@@ -6,6 +6,7 @@ import BridgeMaker from './BridgeMaker.js';
 class BridgeGame {
   #bridge;
   #bridgeRandomNumberGenerator;
+  #moveCount = 0;
 
   constructor(size, bridgeRandomNumberGenerator) {
     this.#bridgeRandomNumberGenerator = bridgeRandomNumberGenerator;
@@ -15,6 +16,10 @@ class BridgeGame {
 
   getSize() {
     return this.#bridge.length;
+  }
+
+  addMoveCount() {
+    this.#moveCount += 1;
   }
 
   #generageBridge(size) {
