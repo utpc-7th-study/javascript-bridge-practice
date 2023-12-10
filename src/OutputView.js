@@ -18,30 +18,17 @@ const OutputView = {
   },
 
   printMap(isSuccess, moved) {
-    if (isSuccess) {
-      Console.print('\n최종 게임 결과');
-    }
+    if (isSuccess) Console.print('\n최종 게임 결과');
 
     const lower = moved.map(([{ Lower }]) => Lower);
     const upper = moved.map(([{ Uppper }]) => Uppper);
-
-    this.printUp(upper);
-    this.printDown(lower);
+    this.formatMap(upper);
+    this.formatMap(lower);
   },
 
-  printUp(upper) {
+  formatMap(target) {
     let result = '';
-    upper.forEach((item) => {
-      if (item === null) result += '[   ]';
-      if (item === true) result += '[ O ]';
-      if (item === false) result += '[ X ]';
-    });
-    Console.print(result.replaceAll('][', '|'));
-  },
-
-  printDown(lower) {
-    let result = '';
-    lower.forEach((item) => {
+    target.forEach((item) => {
       if (item === null) result += '[   ]';
       if (item === true) result += '[ O ]';
       if (item === false) result += '[ X ]';

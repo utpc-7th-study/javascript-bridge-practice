@@ -39,12 +39,8 @@ class App {
     const size = this.#bridgeGame.getSize();
     for (let i = 0; i < size; i++) {
       const isMove = await this.#moveBridge(i);
-
-      if (isMove) {
-        continue;
-      }
-
-      return await this.#reStartOrQuitProces();
+      if (isMove) continue;
+      await this.#reStartOrQuitProces();
     }
 
     return true;

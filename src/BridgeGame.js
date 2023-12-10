@@ -12,7 +12,6 @@ class BridgeGame {
   constructor(size, bridgeRandomNumberGenerator) {
     this.#bridgeRandomNumberGenerator = bridgeRandomNumberGenerator;
     this.#bridge = this.#generageBridge(size);
-    console.log(this.#bridge);
   }
 
   getSize() {
