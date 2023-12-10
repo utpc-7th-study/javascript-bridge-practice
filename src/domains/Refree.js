@@ -13,16 +13,22 @@ export default class Refree {
     );
   }
 
-  isFinish(currentPosition) {
-    return currentPosition === this.#bridgeAnswer.length;
+  isFinish(moveHistory) {
+    const isFinish = moveHistory.every(({ isSuccess }) => isSuccess);
+
+    return !!isFinish && moveHistory.length === this.#bridgeAnswer.length;
   }
 
-  isMovable(moveNumber, position) {
-    return this.#bridgeAnswer[position] === moveNumber;
+  isMovable(moveChar, position) {
+    return this.#bridgeAnswer[position] === moveChar;
   }
 
-  // eslint-disable-next-line max-lines-per-function
   #validate(bridgeLength) {
+    this.#checkNumeric(bridgeLength);
+    this.#checkRange(bridgeLength);
+  }
+
+  #checkNumeric(bridgeLength) {
     const numericRegExp = new RegExp('^[0-9]+$');
 
     if (!numericRegExp.test(bridgeLength)) {
@@ -30,7 +36,9 @@ export default class Refree {
         '다리 길이는 3부터 20 사이의 숫자여야 합니다.',
       );
     }
+  }
 
+  #checkRange(bridgeLength) {
     if (bridgeLength < 3 || bridgeLength > 20) {
       throw new BridgeLengthInputError(
         '다리 길이는 3부터 20 사이의 숫자여야 합니다.',
