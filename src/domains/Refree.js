@@ -13,6 +13,14 @@ export default class Refree {
     );
   }
 
+  isFinish(currentPosition) {
+    return currentPosition === this.#bridgeAnswer.length;
+  }
+
+  isMovable(moveNumber, position) {
+    return this.#bridgeAnswer[position] === moveNumber;
+  }
+
   // eslint-disable-next-line max-lines-per-function
   #validate(bridgeLength) {
     const numericRegExp = new RegExp('^[0-9]+$');
