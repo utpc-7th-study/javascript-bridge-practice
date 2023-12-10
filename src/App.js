@@ -38,7 +38,7 @@ class App {
     while (true) {
       try {
         const input = await InputView.readMoving();
-
+        Validation.moving(input);
         return false;
       } catch (error) {
         OutputView.print(error.message);
