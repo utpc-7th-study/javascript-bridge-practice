@@ -8,12 +8,20 @@ class Bridge {
 
   #commands = [];
 
-  #move = 0;
+  #status = {
+    U: [],
+    D: [],
+  };
+
+  #lastResult = false;
 
   constructor(size) {
-    this.#bridge = BridgeMaker.makeBridge(size, BridgeRandomNumberGenerator.generate).map(
-      (crossAble) => new BridgeSpace(crossAble),
-    );
+    const bridge = BridgeMaker.makeBridge(size, BridgeRandomNumberGenerator.generate);
+    this.#bridge = bridge.map((crossAbleCommand) => new BridgeSpace(crossAbleCommand));
+  }
+
+  done() {
+    return this.#lastResult && this.#bridge.length === this.#commands.length;
   }
 
   size() {
@@ -21,31 +29,36 @@ class Bridge {
   }
 
   status() {
-    const Up = [];
-    const Down = [];
-    const COMMAND_ACTIONS = {
-      [COMMAND.UP]: { pushTo: Up, value: 'O', pushToOther: Down, valueOther: ' ' },
-      [COMMAND.DOWN]: { pushTo: Down, value: 'O', pushToOther: Up, valueOther: ' ' },
+    return this.#status;
+  }
+
+  retry() {
+    this.#commands = [];
+    this.#status = {
+      U: [],
+      D: [],
     };
-    this.#commands.forEach((command) => {
-      const action = COMMAND_ACTIONS[command];
-      action.pushTo.push(action.value);
-      action.pushToOther.push(action.valueOther);
-    });
-    return { U: Up, D: Down };
   }
 
   moveUp() {
-    this.#move += 1;
     this.#recordCommand(COMMAND.UP);
-    const targetSpace = this.#bridge[this.#move].crossAble(COMMAND.UP);
-    return targetSpace;
+    const targetSpace = this.#bridge[this.#commands.length - 1];
+    const safe = targetSpace.crossAble(COMMAND.UP);
+    this.#status.U.push(safe ? 'O' : 'X');
+    this.#status.D.push(' ');
+    this.#lastResult = safe;
+
+    return safe;
   }
 
   moveDown() {
-    this.#move += 1;
     this.#recordCommand(COMMAND.DOWN);
-    const targetSpace = this.#bridge[this.#move];
+    const targetSpace = this.#bridge[this.#commands.length - 1];
+    const safe = targetSpace.crossAble(COMMAND.DOWN);
+    this.#status.D.push(safe ? 'O' : 'X');
+    this.#status.U.push(' ');
+    this.#lastResult = safe;
+
     return targetSpace.crossAble(COMMAND.DOWN);
   }
 

@@ -13,21 +13,32 @@ class BridgeGame {
     this.#bridge = new Bridge(size);
   }
 
+  tryCount() {
+    return this.#tryCount;
+  }
+
+  done() {
+    return this.#bridge.done();
+  }
+
   status() {
     return this.#bridge.status();
   }
 
   move(command) {
     let crossAble = null;
-
-    if (command === COMMAND.UP) crossAble = this.#bridge.moveUp();
-    if (command === COMMAND.DOWN) crossAble = this.#bridge.moveDown();
-
+    if (command === COMMAND.UP) {
+      crossAble = this.#bridge.moveUp();
+    }
+    if (command === COMMAND.DOWN) {
+      crossAble = this.#bridge.moveDown();
+    }
     return crossAble;
   }
 
   retry() {
     this.#tryCount += 1;
+    this.#bridge.retry();
   }
 }
 
