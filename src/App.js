@@ -29,16 +29,20 @@ class App {
   async #moveBridgeProces() {
     const size = this.#bridgeGame.getSize();
     for (let i = 0; i < size; i++) {
-      const isMove = await this.#moveBridge();
+      const isMove = await this.#moveBridge(i);
       if (!isMove) break;
     }
   }
 
-  async #moveBridge() {
+  async #moveBridge(idx) {
     while (true) {
       try {
         const input = await InputView.readMoving();
         Validation.moving(input);
+        const isMoved = this.#bridgeGame.move(input, idx);
+        if (isMoved) {
+          return true;
+        }
         return false;
       } catch (error) {
         OutputView.print(error.message);
