@@ -1,3 +1,5 @@
+import { COMMAND } from './constant/BridgeGame.js';
+
 const BridgeMaker = {
   /**
    * @param {number} size 다리의 길이
@@ -8,7 +10,7 @@ const BridgeMaker = {
     const bridge = [];
 
     for (let i = 0; i < size; i += 1) {
-      const crossAbleSection = generateRandomNumber() ? 'U' : 'D';
+      const crossAbleSection = generateRandomNumber() ? COMMAND.UP : COMMAND.DOWN;
       bridge.push(crossAbleSection);
     }
 
