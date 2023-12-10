@@ -7,7 +7,7 @@ class BridgeGame {
   #bridge;
   #bridgeRandomNumberGenerator;
   #moveHisotry = [];
-  #moveCount = 0;
+  #moveCount = 1;
 
   constructor(size, bridgeRandomNumberGenerator) {
     this.#bridgeRandomNumberGenerator = bridgeRandomNumberGenerator;
@@ -21,7 +21,14 @@ class BridgeGame {
 
   addMoveCount() {
     this.#moveCount += 1;
-    console.log(this.#moveCount);
+  }
+
+  getMoveCount() {
+    return this.#moveCount;
+  }
+
+  getHistory() {
+    return this.#moveHisotry;
   }
 
   #generageBridge(size) {
@@ -43,7 +50,7 @@ class BridgeGame {
   }
 
   #moveUpper(bridgePosition) {
-    const isMoved = 1 === bridgePosition;
+    const isMoved = 'U' === bridgePosition;
     this.#moveHisotry.push([
       {
         isMoved,
@@ -54,7 +61,7 @@ class BridgeGame {
   }
 
   #moveLower(bridgePosition) {
-    const isMoved = 0 === bridgePosition;
+    const isMoved = 'D' === bridgePosition;
     this.#moveHisotry.push([
       {
         isMoved,
@@ -69,7 +76,9 @@ class BridgeGame {
    * <p>
    * 재시작을 위해 필요한 메서드의 반환 값(return value), 인자(parameter)는 자유롭게 추가하거나 변경할 수 있다.
    */
-  retry() {}
+  retry() {
+    this.#moveHisotry = [];
+  }
 }
 
 export default BridgeGame;

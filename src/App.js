@@ -10,8 +10,16 @@ class App {
   async play() {
     OutputView.printStartMessage();
     await this.#generageBridgeProcess();
-    await this.#moveBridgeProces();
-    await this.#reStartOrQuitProces();
+    await this.#test();
+  }
+
+  async #test() {
+    const isMoved = await this.#moveBridgeProces();
+    if (isMoved) {
+      const history = this.#bridgeGame.getHistory();
+      OutputView.printRoundResult(true, history);
+      OutputView.printResult(true, this.#bridgeGame.getMoveCount());
+    }
   }
 
   async #generageBridgeProcess() {
@@ -33,12 +41,13 @@ class App {
       const isMove = await this.#moveBridge(i);
 
       if (isMove) {
-        this.#bridgeGame.addMoveCount();
         continue;
       }
 
-      break;
+      return await this.#reStartOrQuitProces();
     }
+
+    return true;
   }
 
   async #moveBridge(idx) {
@@ -48,7 +57,7 @@ class App {
         Validation.moving(input);
         const moved = this.#bridgeGame.move(input, idx);
         const { isMoved } = moved[moved.length - 1][0];
-        OutputView.printRoundResult(moved);
+        OutputView.printRoundResult(false, moved);
         return isMoved;
       } catch (error) {
         OutputView.print(error.message);
@@ -61,7 +70,15 @@ class App {
       try {
         const input = await InputView.readGameCommand();
         Validation.reStartOrQuit(input);
-        break;
+        if (input === 'Q') {
+          OutputView.printResult(false, this.#bridgeGame.getMoveCount());
+          return;
+        }
+        if (input === 'R') {
+          this.#bridgeGame.retry();
+          this.#bridgeGame.addMoveCount();
+          return await this.#test();
+        }
       } catch (error) {
         OutputView.print(error.message);
       }
@@ -73,3 +90,5 @@ const app = new App();
 app.play();
 
 export default App;
+
+[1, 1, 0];

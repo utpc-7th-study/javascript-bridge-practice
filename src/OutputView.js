@@ -10,13 +10,20 @@ const OutputView = {
 
   printMap() {},
 
-  printResult() {},
+  printResult(isMove, totalCount) {
+    Console.print(`\n게임 성공 여부: ${isMove ? '성공' : '실패'}`);
+    Console.print(`총 시도한 횟수: ${totalCount}`);
+  },
 
   print(message) {
     Console.print(message);
   },
 
-  printRoundResult(moved) {
+  printRoundResult(isSuccess, moved) {
+    if (isSuccess) {
+      Console.print('\n최종 게임 결과');
+    }
+
     const lower = moved.map(([{ Lower }]) => Lower);
     const upper = moved.map(([{ Uppper }]) => Uppper);
 
