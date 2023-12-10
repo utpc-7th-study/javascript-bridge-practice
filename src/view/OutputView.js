@@ -8,13 +8,7 @@ const OutputView = {
   BRIDGE_SEPARATOR: '|',
 
   convertBridgeStatus(bridge) {
-    const printFormat = bridge
-      .map((bool) => {
-        if (bool === null) return ' ';
-
-        return bool ? 'O' : 'X';
-      })
-      .join(this.BRIDGE_SEPARATOR);
+    const printFormat = `[ ${bridge.join(` ${this.BRIDGE_SEPARATOR} `)} ]`;
 
     return printFormat;
   },
@@ -28,7 +22,7 @@ const OutputView = {
     const { U, D } = bridge;
     const brideStatus = [this.convertBridgeStatus(U), this.convertBridgeStatus(D)];
 
-    this.print(brideStatus.join(EOL));
+    this.print(`${brideStatus.join(EOL)}${EOL}`);
   },
 
   /**
