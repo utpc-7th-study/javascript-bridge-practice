@@ -11,6 +11,7 @@ class App {
     OutputView.printStartMessage();
     await this.#generageBridgeProcess();
     await this.#moveBridgeProces();
+    await this.#reStartOrQuitProces();
   }
 
   async #generageBridgeProcess() {
@@ -49,6 +50,16 @@ class App {
         const { isMoved } = moved[moved.length - 1][0];
         OutputView.printRoundResult(moved);
         return isMoved;
+      } catch (error) {
+        OutputView.print(error.message);
+      }
+    }
+  }
+
+  async #reStartOrQuitProces() {
+    while (true) {
+      try {
+        const input = await InputView.readGameCommand();
       } catch (error) {
         OutputView.print(error.message);
       }
