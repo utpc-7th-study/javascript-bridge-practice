@@ -1,6 +1,6 @@
 import { Console } from '@woowacourse/mission-utils';
 import hasError from '../utils/hasError.js';
-import { validateBridgeSize } from '../validator/validator.js';
+import { validateBridgeSize, validateMoving } from '../validator/validator.js';
 /**
  * 사용자로부터 입력을 받는 역할을 한다.
  */
@@ -27,6 +27,10 @@ const InputView = {
     const moving = await Console.readLineAsync(
       '\n이동할 칸을 선택해주세요. (위: U, 아래: D)\n'
     );
+
+    if (hasError(validateMoving, moving)) {
+      return await this.readMoving();
+    }
 
     return moving;
   },
