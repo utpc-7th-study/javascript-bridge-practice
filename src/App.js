@@ -12,6 +12,8 @@ class App {
     const bridgeSize = await InputView.readBridgeSize();
 
     this.#bridgeGame.createWinningBridge(bridgeSize);
+
+    await this.#bridgeGame.move();
   }
 }
 
