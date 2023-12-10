@@ -17,6 +17,10 @@ class WinningBridge {
   isSame(moving, currentPosition) {
     return this.#bridge[currentPosition] === moving;
   }
+
+  isSameSize(size) {
+    return this.#bridge.length === size;
+  }
 }
 
 export default WinningBridge;

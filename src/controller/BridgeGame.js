@@ -25,6 +25,10 @@ class BridgeGame {
    * 이동을 위해 필요한 메서드의 반환 값(return value), 인자(parameter)는 자유롭게 추가하거나 변경할 수 있다.
    */
   async move() {
+    if (this.#user.isFinished(this.#winningBridge)) {
+      return this.close(true);
+    }
+
     const moving = await InputView.readMoving();
     if (this.#user.canMove(moving, this.#winningBridge)) {
       this.#user.succeed(moving);
@@ -50,10 +54,12 @@ class BridgeGame {
       return await this.move();
     }
 
-    return this.close();
+    return this.close(false);
   }
 
-  close() {}
+  close(succeed) {
+    OutputView.printResult(succeed);
+  }
 }
 
 export default BridgeGame;

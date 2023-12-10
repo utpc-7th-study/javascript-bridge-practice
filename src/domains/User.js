@@ -39,6 +39,10 @@ class User {
     this.#bridge.get('U').pop();
     this.#bridge.get('D').pop();
   }
+
+  isFinished(winningBridge) {
+    return winningBridge.isSameSize(this.#bridge.get('U').length);
+  }
 }
 
 export default User;
