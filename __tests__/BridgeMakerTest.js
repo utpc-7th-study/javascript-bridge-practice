@@ -22,7 +22,7 @@ describe('BridgeMaker test', () => {
       size,
       BridgeRandomNumberGenerator.generate,
     );
-    const result = bridge.every((value) => value === 0 || value === 1);
+    const result = bridge.every((value) => value === 'U' || value === 'D');
 
     // then
     expect(result).toBe(true);
