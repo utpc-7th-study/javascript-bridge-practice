@@ -6,6 +6,7 @@ import BridgeMaker from './BridgeMaker.js';
 class BridgeGame {
   #bridge;
   #bridgeRandomNumberGenerator;
+  #moveHisotry = [];
   #moveCount = 0;
 
   constructor(size, bridgeRandomNumberGenerator) {
@@ -20,6 +21,7 @@ class BridgeGame {
 
   addMoveCount() {
     this.#moveCount += 1;
+    console.log(this.#moveCount);
   }
 
   #generageBridge(size) {
@@ -34,8 +36,32 @@ class BridgeGame {
    */
   move(moving, idx) {
     const bridgePosition = this.#bridge[idx];
-    if (moving === 'U') return 1 === bridgePosition;
-    return 0 === bridgePosition;
+    if (moving === 'U') this.#moveUpper(bridgePosition);
+    if (moving === 'D') this.#moveLower(bridgePosition);
+
+    return this.#moveHisotry;
+  }
+
+  #moveUpper(bridgePosition) {
+    const isMoved = 1 === bridgePosition;
+    this.#moveHisotry.push([
+      {
+        isMoved,
+        Uppper: isMoved,
+        Lower: null,
+      },
+    ]);
+  }
+
+  #moveLower(bridgePosition) {
+    const isMoved = 0 === bridgePosition;
+    this.#moveHisotry.push([
+      {
+        isMoved,
+        Uppper: null,
+        Lower: isMoved,
+      },
+    ]);
   }
 
   /**

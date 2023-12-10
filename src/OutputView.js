@@ -15,6 +15,34 @@ const OutputView = {
   print(message) {
     Console.print(message);
   },
+
+  printRoundResult(moved) {
+    const lower = moved.map(([{ Lower }]) => Lower);
+    const upper = moved.map(([{ Uppper }]) => Uppper);
+
+    this.printUp(upper);
+    this.printDown(lower);
+  },
+
+  printUp(upper) {
+    let result = '';
+    upper.forEach((item) => {
+      if (item === null) result += '[   ]';
+      if (item === true) result += '[ O ]';
+      if (item === false) result += '[ X ]';
+    });
+    Console.print(result.replaceAll('][', '|'));
+  },
+
+  printDown(lower) {
+    let result = '';
+    lower.forEach((item) => {
+      if (item === null) result += '[   ]';
+      if (item === true) result += '[ O ]';
+      if (item === false) result += '[ X ]';
+    });
+    Console.print(result.replaceAll('][', '|'));
+  },
 };
 
 export default OutputView;

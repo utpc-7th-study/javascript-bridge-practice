@@ -30,7 +30,13 @@ class App {
     const size = this.#bridgeGame.getSize();
     for (let i = 0; i < size; i++) {
       const isMove = await this.#moveBridge(i);
-      if (!isMove) break;
+
+      if (isMove) {
+        this.#bridgeGame.addMoveCount();
+        continue;
+      }
+
+      break;
     }
   }
 
@@ -39,20 +45,14 @@ class App {
       try {
         const input = await InputView.readMoving();
         Validation.moving(input);
-        return this.#checkMove(input, idx);
+        const moved = this.#bridgeGame.move(input, idx);
+        const { isMoved } = moved[moved.length - 1][0];
+        OutputView.printRoundResult(moved);
+        return isMoved;
       } catch (error) {
         OutputView.print(error.message);
       }
     }
-  }
-
-  #checkMove(input, idx) {
-    const isMoved = this.#bridgeGame.move(input, idx);
-    if (isMoved) {
-      this.#bridgeGame.addMoveCount();
-      return true;
-    }
-    return false;
   }
 }
 
