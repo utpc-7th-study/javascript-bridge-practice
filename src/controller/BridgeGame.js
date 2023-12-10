@@ -11,6 +11,7 @@ class BridgeGame {
 
   constructor(size) {
     this.#bridge = new Bridge(size);
+    this.#tryCount += 1;
   }
 
   tryCount() {
@@ -26,14 +27,10 @@ class BridgeGame {
   }
 
   move(command) {
-    let crossAble = null;
-    if (command === COMMAND.UP) {
-      crossAble = this.#bridge.moveUp();
-    }
-    if (command === COMMAND.DOWN) {
-      crossAble = this.#bridge.moveDown();
-    }
-    return crossAble;
+    let safe = null;
+    if (command === COMMAND.UP) safe = this.#bridge.moveUp();
+    if (command === COMMAND.DOWN) safe = this.#bridge.moveDown();
+    return safe;
   }
 
   retry() {

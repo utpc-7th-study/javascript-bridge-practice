@@ -29,6 +29,7 @@ class Bridge {
   }
 
   status() {
+    console.log(this.#status, this.#commands);
     return this.#status;
   }
 
@@ -59,7 +60,7 @@ class Bridge {
     this.#status.U.push(' ');
     this.#lastResult = safe;
 
-    return targetSpace.crossAble(COMMAND.DOWN);
+    return safe;
   }
 
   #recordCommand(command) {

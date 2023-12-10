@@ -1,14 +1,49 @@
-import BridgeGame from './BridgeGame.js';
+/* eslint-disable max-lines-per-function */
+import BridgeGame from './controller/BridgeGame.js';
 import { BRIDGE_LENGTH, COMMAND } from './constant/BridgeGame.js';
 import ERROR_MESSAGE from './constant/BridgeGameMessage.js';
 import InputView from './view/InputView.js';
 import OutputView from './view/OutputView.js';
 
 class App {
+  #bridgeGame;
+
   async play() {
     const bridgeSize = await this.readBridgeSize();
     const bridgeGame = new BridgeGame(bridgeSize);
-    await this.readMoving();
+
+    while (!bridgeGame.done()) {
+      const moving = await this.readMoving();
+      const safe = bridgeGame.move(moving);
+      OutputView.printMap(bridgeGame.status());
+      if (!safe) {
+        const restart = await this.readRestart();
+        if (!restart) break;
+        bridgeGame.retry();
+      }
+    }
+
+    OutputView.printResult(bridgeGame.status(), bridgeGame.done(), bridgeGame.tryCount());
+  }
+
+  async mainLoop() {
+    let continueGame = true;
+    while (!this.#bridgeGame.done() && continueGame) {
+      continueGame = await this.#processMove();
+      if (continueGame) {
+        this.#bridgeGame.retry();
+      }
+    }
+  }
+
+  async #processMove() {
+    const moving = await this.readMoving();
+    if (!this.#bridgeGame.move(moving)) {
+      OutputView.printMap(this.#bridgeGame.status());
+      return await this.readRestart();
+    }
+    OutputView.printMap(this.#bridgeGame.status());
+    return true;
   }
 
   async readBridgeSize() {
@@ -33,6 +68,17 @@ class App {
     }
   }
 
+  async readRestart() {
+    try {
+      const restartCommand = await InputView.readRestartCommand();
+      this.#validateRestartCommand(restartCommand);
+      return restartCommand === COMMAND.RESTART;
+    } catch (error) {
+      OutputView.print(error.message);
+      return this.readRestart();
+    }
+  }
+
   #validateBridgeSize(bridgeSizeInput) {
     const isValidSize =
       bridgeSizeInput >= BRIDGE_LENGTH.MIN && bridgeSizeInput <= BRIDGE_LENGTH.MAX;
@@ -44,7 +90,13 @@ class App {
 
   #validateMovingCommand(movingCommandInput) {
     if (!(movingCommandInput === COMMAND.UP || movingCommandInput === COMMAND.DOWN)) {
-      throw new Error(ERROR_MESSAGE.INVALID_VALUE);
+      throw new Error(ERROR_MESSAGE.INVALID_INPUT);
+    }
+  }
+
+  #validateRestartCommand(restartCommand) {
+    if (!(restartCommand === COMMAND.RESTART || restartCommand === COMMAND.QUIT)) {
+      throw new Error(ERROR_MESSAGE.INVALID_INPUT);
     }
   }
 }
