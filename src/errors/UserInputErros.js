@@ -9,3 +9,4 @@ export class UserInputError extends Error {
 
 export class BridgeLengthInputError extends UserInputError {}
 export class MoveInputError extends UserInputError {}
+export class RetryInputError extends UserInputError {}
