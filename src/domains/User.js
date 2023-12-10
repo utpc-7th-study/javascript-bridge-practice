@@ -43,6 +43,10 @@ class User {
   isFinished(winningBridge) {
     return winningBridge.isSameSize(this.#bridge.get('U').length);
   }
+
+  getTryNumber() {
+    return this.#tryNumber;
+  }
 }
 
 export default User;

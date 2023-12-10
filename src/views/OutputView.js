@@ -13,8 +13,8 @@ const OutputView = {
    * 출력을 위해 필요한 메서드의 인자(parameter)는 자유롭게 추가하거나 변경할 수 있다.
    */
   printMap(bridge) {
-    console.log(`[ ${bridge.get('U').join(' | ')} ]`);
-    console.log(`[ ${bridge.get('D').join(' | ')} ]`);
+    Console.print(`[ ${bridge.get('U').join(' | ')} ]`);
+    Console.print(`[ ${bridge.get('D').join(' | ')} ]`);
   },
 
   /**
@@ -22,7 +22,13 @@ const OutputView = {
    * <p>
    * 출력을 위해 필요한 메서드의 인자(parameter)는 자유롭게 추가하거나 변경할 수 있다.
    */
-  printResult(succeed) {},
+  printResult(bridge, succeed, tryNumber) {
+    Console.print('\n최종 게임 결과');
+    this.printMap(bridge);
+
+    Console.print(`\n게임 성공 여부: ${succeed ? '성공' : '실패'}`);
+    Console.print(`총 시도한 횟수: ${tryNumber}`);
+  },
 };
 
 export default OutputView;

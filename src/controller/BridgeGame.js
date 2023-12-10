@@ -58,7 +58,11 @@ class BridgeGame {
   }
 
   close(succeed) {
-    OutputView.printResult(succeed);
+    OutputView.printResult(
+      this.#user.getBridge(),
+      succeed,
+      this.#user.getTryNumber()
+    );
   }
 }
 
