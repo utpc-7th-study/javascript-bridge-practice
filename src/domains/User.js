@@ -34,6 +34,11 @@ class User {
   addTryNumber() {
     this.#tryNumber += 1;
   }
+
+  removeLast() {
+    this.#bridge.get('U').pop();
+    this.#bridge.get('D').pop();
+  }
 }
 
 export default User;

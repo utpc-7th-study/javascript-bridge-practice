@@ -46,6 +46,7 @@ class BridgeGame {
     const gameCommand = await InputView.readGameCommand();
     if (gameCommand === 'R') {
       this.#user.addTryNumber();
+      this.#user.removeLast();
       return await this.move();
     }
 
