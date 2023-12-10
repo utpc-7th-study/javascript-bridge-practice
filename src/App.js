@@ -17,6 +17,6 @@ class App {
 }
 
 const app = new App();
-await app.play();
+app.play();
 
 export default App;

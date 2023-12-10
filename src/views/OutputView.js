@@ -29,6 +29,10 @@ const OutputView = {
     Console.print(`\n게임 성공 여부: ${succeed ? '성공' : '실패'}`);
     Console.print(`총 시도한 횟수: ${tryNumber}`);
   },
+
+  print(message) {
+    Console.print(message);
+  },
 };
 
 export default OutputView;

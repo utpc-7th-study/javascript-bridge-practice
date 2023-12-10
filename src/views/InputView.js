@@ -1,4 +1,6 @@
 import { Console } from '@woowacourse/mission-utils';
+import hasError from '../utils/hasError.js';
+import { validateBridgeSize } from '../validator/validator.js';
 /**
  * 사용자로부터 입력을 받는 역할을 한다.
  */
@@ -10,6 +12,10 @@ const InputView = {
     const bridgeSize = await Console.readLineAsync(
       '다리의 길이를 입력해주세요.\n'
     );
+
+    if (hasError(validateBridgeSize, bridgeSize)) {
+      return await this.readBridgeSize();
+    }
 
     return Number(bridgeSize);
   },
