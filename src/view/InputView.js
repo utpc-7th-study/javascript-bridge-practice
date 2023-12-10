@@ -8,9 +8,8 @@ const InputView = {
    * 다리의 길이를 입력받는다.
    */
   async readBridgeSize() {
-    const userInput = await this.onRead(
-      '이동할 칸을 선택해주세요. (위: U, 아래: D)\n',
-    );
+    const userInput = await this.onRead('다리의 길이를 입력해주세요.\n');
+
     return userInput;
   },
 
@@ -18,7 +17,10 @@ const InputView = {
    * 사용자가 이동할 칸을 입력받는다.
    */
   async readMoving() {
-    const userInput = await this.onRead('다리의 길이를 입력해주세요.\n');
+    const userInput = await this.onRead(
+      '이동할 칸을 선택해주세요. (위: U, 아래: D)\n',
+    );
+
     return userInput;
   },
 
