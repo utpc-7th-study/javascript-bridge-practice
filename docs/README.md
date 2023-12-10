@@ -29,6 +29,6 @@ npm install --save-dev eslint eslint-plugin-jest
   - [] 0인경우 D, 1인경우 U
 
 - 예외처리
-  - [] 잘못된 다리 길이 입력
+  - [x] 잘못된 다리 길이 입력
     - `[ERROR] 다리 길이는 3부터 20 사이의 숫자여야 합니다.`
   - [] U, D 이외의 값
