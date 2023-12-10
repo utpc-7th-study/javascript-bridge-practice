@@ -1,6 +1,10 @@
 import { Console } from '@woowacourse/mission-utils';
 import hasError from '../utils/hasError.js';
-import { validateBridgeSize, validateMoving } from '../validator/validator.js';
+import {
+  validateBridgeSize,
+  validateMoving,
+  validateGameCommand,
+} from '../validator/validator.js';
 /**
  * 사용자로부터 입력을 받는 역할을 한다.
  */
@@ -42,6 +46,10 @@ const InputView = {
     const gameCommand = await Console.readLineAsync(
       '\n게임을 다시 시도할지 여부를 입력해주세요. (재시도: R, 종료: Q)\n'
     );
+
+    if (hasError(validateGameCommand, gameCommand)) {
+      return await this.readGameCommand();
+    }
 
     return gameCommand;
   },

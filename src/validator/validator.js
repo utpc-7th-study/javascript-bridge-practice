@@ -12,8 +12,14 @@ const Validator = {
   },
 
   invalidMoving(moving) {
-    if (moving !== 'U' || moving !== 'D') {
+    if (moving !== 'U' && moving !== 'D') {
       throw new Error('[ERROR] 이동할 칸은 U 또는 D로만 입력해야 합니다.');
+    }
+  },
+
+  invalidGameCommand(gameCommand) {
+    if (gameCommand !== 'R' && gameCommand !== 'Q') {
+      throw new Error('[ERROR] 재시작 여부는 R 또는 Q로만 입력해야 합니다.');
     }
   },
 };
@@ -25,4 +31,8 @@ export const validateBridgeSize = (bridgeSize) => {
 
 export const validateMoving = (moving) => {
   Validator.invalidMoving(moving);
+};
+
+export const validateGameCommand = (gameCommand) => {
+  Validator.invalidGameCommand(gameCommand);
 };
