@@ -60,6 +60,8 @@ class App {
     while (true) {
       try {
         const input = await InputView.readGameCommand();
+        Validation.reStartOrQuit(input);
+        break;
       } catch (error) {
         OutputView.print(error.message);
       }
