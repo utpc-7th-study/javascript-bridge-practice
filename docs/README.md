@@ -22,7 +22,7 @@ npm install --save-dev eslint eslint-plugin-jest
 
 - 비지니스
 
-  - [] 입력받은 값만큼 다리 생성
+  - [x] 입력받은 값만큼 다리 생성
   - [] 게임이 끝났는지 확인
   - [] 이동할 수 있는지 확인
   - [] 시도한 횟수 저장
