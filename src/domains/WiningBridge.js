@@ -13,6 +13,10 @@ class WinningBridge {
     const generateRandomNumber = BridgeRandomNumberGenerator.generate;
     this.#bridge = BridgeMaker.makeBridge(size, generateRandomNumber);
   }
+
+  isSame(moving, currentPosition) {
+    return this.#bridge[currentPosition] === moving;
+  }
 }
 
 export default WinningBridge;

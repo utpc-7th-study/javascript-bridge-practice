@@ -26,6 +26,10 @@ class BridgeGame {
    */
   async move() {
     const moving = await InputView.readMoving();
+    if (this.#user.canMove(moving, this.#winningBridge)) {
+      this.#user.move();
+      return await this.move();
+    }
   }
 
   /**
