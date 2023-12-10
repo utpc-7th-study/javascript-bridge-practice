@@ -1,8 +1,17 @@
+import BridgeGame from './BridgeGame.js';
+import InputView from './views/InputView.js';
+
 class App {
-  async play() {}
+  constructor() {
+    this.bridgeGame = new BridgeGame();
+  }
+
+  async play() {
+    const bridgeSize = await InputView.readBridgeSize();
+  }
 }
 
 const app = new App();
-app.play();
+await app.play();
 
 export default App;
