@@ -17,12 +17,12 @@ const InputView = {
     return movingInput;
   },
 
-  async readGameCommand() {
-    const gameCommandInput = await this.read(
+  async readRestartCommand() {
+    const restartInput = await this.read(
       `게임을 다시 시작할지 여부를 입력해주세요. (재시도: ${COMMAND.RESTART}, 종료: ${COMMAND.QUIT})${EOL}`,
     );
 
-    return gameCommandInput;
+    return restartInput;
   },
 
   async read(message) {
