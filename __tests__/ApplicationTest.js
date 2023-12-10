@@ -87,6 +87,7 @@ describe('다리 건너기 테스트', () => {
       '[ERROR] 다리 길이는 3부터 20 사이의 숫자여야 합니다.';
     const INPUTS_TO_END = ['3', 'U', 'D', 'U'];
     const logSpy = getLogSpy();
+    mockRandoms([1, 0, 1]);
     mockQuestions(['a', ...INPUTS_TO_END]);
 
     // when
