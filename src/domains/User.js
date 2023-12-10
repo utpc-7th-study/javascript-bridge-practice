@@ -30,6 +30,10 @@ class User {
   getBridge() {
     return this.#bridge;
   }
+
+  addTryNumber() {
+    this.#tryNumber += 1;
+  }
 }
 
 export default User;

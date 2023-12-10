@@ -34,6 +34,7 @@ class BridgeGame {
 
     this.#user.fail(moving);
     OutputView.printMap(this.#user.getBridge());
+    await this.retry();
   }
 
   /**
@@ -41,7 +42,17 @@ class BridgeGame {
    * <p>
    * 재시작을 위해 필요한 메서드의 반환 값(return value), 인자(parameter)는 자유롭게 추가하거나 변경할 수 있다.
    */
-  retry() {}
+  async retry() {
+    const gameCommand = await InputView.readGameCommand();
+    if (gameCommand === 'R') {
+      this.#user.addTryNumber();
+      return await this.move();
+    }
+
+    return this.close();
+  }
+
+  close() {}
 }
 
 export default BridgeGame;
